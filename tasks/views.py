@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 # Create your views here.
 
@@ -22,11 +23,15 @@ def signup(request):
                     password=request.POST['password1']
                 )
                 user.save()
-                return HttpResponse('User has been created')
+                login(request, user)
+                return redirect('tasks')
             except Exception as e:
-                print(e)
-                return HttpResponse('Error creating user')
+                return render(request, 'signup.html', {'form': UserCreationForm, 'error': e})
+
         else:
-            return HttpResponse('Password do not match')
+            return render(request, 'signup.html', {'form': UserCreationForm, 'error': 'Password do not match'})
+        
+def tasks(request):
+    return render(request, 'tasks.html')
         
     
