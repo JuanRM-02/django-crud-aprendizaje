@@ -2,6 +2,16 @@
 
 {% block content %}
 
-    tasks
+    <h1>Tasks</h1>
+    <a href="{% url 'new_task' %}">New Task</a>
+    <div></div>
+
+    {% for task in tasks %}
+    
+        <h3>{{task.title}}</h3>
+        <p>{{task.description}}</p>
+        <span>{{task.importance}}</span>
+    
+    {% endfor %}
 
 {% endblock %}
