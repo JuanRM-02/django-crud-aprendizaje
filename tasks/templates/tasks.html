@@ -8,9 +8,21 @@
 
     {% for task in tasks %}
     
-        <h3>{{task.title}}</h3>
+        <a href="{% url 'task' task.id %}">
+            <h3>{{task.title}}</h3>
+        </a>
         <p>{{task.description}}</p>
-        <span>{{task.importance}}</span>
+        <p>{{task.creation_date|date:'M j Y'}}</p>
+        {% if task.importance %}
+            <div><strong>Importante</strong></div>
+        {% endif %}
+
+        {% if task.finish_date == None %}
+            <span><strong>No finalizado</strong></span>
+        {% else %}
+            <span><strong>Finalizado</strong></span>
+        {% endif %}
+
     
     {% endfor %}
 
